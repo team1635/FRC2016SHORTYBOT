@@ -126,10 +126,17 @@ public class Intaker extends Subsystem {
 		// return pressureLevel;
 	}
 
+//	public void raise_LowerIntaker(Joystick joy2) {
+//		if (joy2.getRawButton(3)) {
+//			intakerLifter.set(true);
+//		} else if (joy2.getRawButton(4)) {
+//			intakerLifter.set(false);
+//		}
+//	}
 	public void raise_LowerIntaker(Joystick joy2) {
-		if (joy2.getRawButton(3)) {
+		if (joy2.getRawAxis(2)>0) {
 			intakerLifter.set(true);
-		} else if (joy2.getRawButton(4)) {
+		} else if (joy2.getRawAxis(3)>0) {
 			intakerLifter.set(false);
 		}
 	}
@@ -175,6 +182,10 @@ public class Intaker extends Subsystem {
 		Timer.delay(0.5);// less force when passing
 		talon.set(0);
 		onTarget = true;
+	}
+	
+	public void resetOnTarget() {
+		onTarget = false;
 	}
 
 	public void raiseIntaker() {

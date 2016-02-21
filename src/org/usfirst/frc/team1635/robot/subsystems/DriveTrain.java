@@ -154,6 +154,10 @@ public class DriveTrain extends Subsystem {
 		}
 	}
 
+	public void resetOnTarget() {
+		onTarget = false;
+	}
+
 	public boolean isOnTarget() {
 		return onTarget;
 	}
@@ -186,7 +190,7 @@ public class DriveTrain extends Subsystem {
 				drive.tankDrive(-0.23, 0.23);
 			}
 		} else if (!direction) {// turn to the left
-			double inverted = - degrees;
+			double inverted = -degrees;
 			if (obtainYaw() < inverted + 1.5 && obtainYaw() > inverted - 1.5) {
 				drive.tankDrive(0, 0);
 				onTarget = true;
@@ -196,28 +200,46 @@ public class DriveTrain extends Subsystem {
 		}
 	}
 
+	public double getPitch() {
+		return imu.getPitch();
+	}
+
+	public void drive_65() {
+		if (getPitch() > 4 || getPitch() < -4) {
+			drive.tankDrive(0, 0);
+			onTarget = true;
+		} else {
+			drive.tankDrive(0.65, 0.65);
+		}
+	}
+
 	/**
 	 * Drive while maintaining the correct direction with the gyro on the NavX
 	 */
 	public void correctWhileDriving() {
-		if (obtainYaw() > 0) {
-			if (obtainYaw() < 1.5 && obtainYaw() > 0) {
-				drive.tankDrive(-0.23, -0.23);
-			} else if (obtainYaw() > 1.5 && obtainYaw() < 4) {
-				drive.tankDrive(0.15, -0.15);
-			} else if (obtainYaw() > 4) {
-				drive.tankDrive(0.23, -0.23);
+		if (getPitch() < 4 && getPitch() > -4) {
+			if (obtainYaw() > 0) {
+				if (obtainYaw() < 1.5 && obtainYaw() > 0) {
+					drive.tankDrive(0.85, 0.85);
+				} else if (obtainYaw() > 1.5 && obtainYaw() < 4) {
+					drive.tankDrive(-0.5, 0.5);
+				} else if (obtainYaw() > 4) {
+					drive.tankDrive(-0.6, 0.6);
+				}
+			} else if (obtainYaw() < 0) {
+				if (obtainYaw() > -1.5 && obtainYaw() < 0) {
+					drive.tankDrive(0.85, 0.85);
+				} else if (obtainYaw() < -1.5 && obtainYaw() > -4) {
+					drive.tankDrive(0.5, -0.5);
+				} else if (obtainYaw() < -4) {
+					drive.tankDrive(0.6, -0.6);
+				}
 			}
-		} else if (obtainYaw() < 0) {
-			if (obtainYaw() > -1.5 && obtainYaw() < 0) {
-				drive.tankDrive(-0.23, -0.23);
-			} else if (obtainYaw() < -1.5 && obtainYaw() > -4) {
-				drive.tankDrive(-0.15, 0.15);
-			} else if (obtainYaw() < -4) {
-				drive.tankDrive(-0.23, 0.23);
-			}
+		} else {
+			drive.tankDrive(0.75, 0.75);
 		}
 	}
+
 	public void reset() {
 		imu.zeroYaw();
 		// sonar.resetAccumulator();
@@ -227,8 +249,7 @@ public class DriveTrain extends Subsystem {
 		// getDistanceSonar()=0;
 	}
 
-	
-	public double convertNavXtoInches(){
+	public double convertNavXtoInches() {
 		double inches = imu.getDisplacementX() * 1.116;
 		return inches;
 	}
@@ -238,7 +259,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void NavxDriveToSetPoint() {
-		//double dist = imu.getDisplacementX();
+		// double dist = imu.getDisplacementX();
 		double dist = convertNavXtoInches();
 		SmartDashboard.putNumber("autonomous distance", dist);
 
@@ -249,12 +270,14 @@ public class DriveTrain extends Subsystem {
 			drive.tankDrive(-0.3, -0.3);
 		}
 	}
+
 	public void brake() {
-		drive.tankDrive(0.4, 0.4);
-		Timer.delay(0.2);
+		drive.tankDrive(-0.75, -0.75);
+		Timer.delay(0.75);
 		drive.tankDrive(0, 0);
+		onTarget = true;
 	}
- 
+
 	public void unlimitedDrive(double spd) {
 		drive.tankDrive(spd, spd);
 		SmartDashboard.putNumber("vertical displacement", imu.getDisplacementY());

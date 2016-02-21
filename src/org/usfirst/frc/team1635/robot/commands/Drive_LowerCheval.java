@@ -2,41 +2,47 @@ package org.usfirst.frc.team1635.robot.commands;
 
 import org.usfirst.frc.team1635.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Brake extends Command {
-	//double tim3,speed;
+public class Drive_LowerCheval extends Command {
+	boolean isDone;
 
-    public Brake() {
-    	
+    public Drive_LowerCheval() {
+    	requires(Robot.intaker);
     	requires(Robot.drivetrain);
-    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.intaker.resetOnTarget();
+    	isDone = false;
+    	Robot.intaker.resetOnTarget();
     	Robot.drivetrain.resetOnTarget();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.brake();
-    	
+    	Robot.drivetrain.drive_65();
+    	if(Robot.drivetrain.isOnTarget()){
+    		Robot.intaker.lowerIntaker();
+    		Timer.delay(2.5);
+    		isDone = true;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.drivetrain.isOnTarget();
+        return isDone;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.intaker.stopIntaker();
     	Robot.drivetrain.stopDrive();
     }
 

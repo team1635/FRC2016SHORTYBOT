@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 
 	public DigitalInput swich, swich2;
 
-	Command autonomousCommand, auto1, auto2, auto3, auto4, testAuto;
+	Command autonomousCommand, auto1, autoCheval, auto3, auto4, testAuto;
 	SendableChooser chooser;
 
 	/**
@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot {
 		swich2 = new DigitalInput(RobotMap.kSecondSwitchPort);
 
 		auto1 = new Autonomous();
-		auto2 = new AutonomousCheval();
+		autoCheval = new AutonomousCheval();
 		auto3 = new Autonomous3();
 		auto4 = new Autonomous4();
 
@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
 		if (!swich.get() && !swich2.get()) {// both switches off
 			autonomousCommand = auto1;
 		} else if (swich.get() && !swich2.get()) {// switch 1 on
-			autonomousCommand = auto2;
+			autonomousCommand = autoCheval;
 		} else if (!swich.get() && swich2.get()) {// switch 2 on
 			autonomousCommand = auto3;
 		} else if (swich.get() && swich2.get()) {// both switches on
@@ -111,8 +111,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 
-		if (auto1 != null)
-			auto1.start();
+		if (autoCheval != null)
+			autoCheval.start();
 //		if (selectAutonomous() != null)
 //			selectAutonomous().start();
 	}
@@ -130,8 +130,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (auto1 != null)
-			auto1.cancel();
+		if (autoCheval != null)
+			autoCheval.cancel();
 	}
 
 	/**
