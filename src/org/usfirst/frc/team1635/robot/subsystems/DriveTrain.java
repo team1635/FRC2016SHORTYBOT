@@ -93,7 +93,8 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void log() {
-		SmartDashboard.putBoolean("gearStatus", gearShifter.get());
+		//SmartDashboard.putBoolean("gearStatus", gearShifter.get());
+		SmartDashboard.putNumber("gyro", obtainYaw());
 	}
 
 	public void drive(Joystick joy) {
@@ -209,7 +210,8 @@ public class DriveTrain extends Subsystem {
 			drive.tankDrive(0, 0);
 			onTarget = true;
 		} else {
-			drive.tankDrive(0.65, 0.65);
+			//drive.tankDrive(0.65, 0.65);
+			correctWhileDrivingWOPitch();
 		}
 	}
 
@@ -217,7 +219,9 @@ public class DriveTrain extends Subsystem {
 	 * Drive while maintaining the correct direction with the gyro on the NavX
 	 */
 	public void correctWhileDriving() {
-		if (getPitch() < 4 && getPitch() > -4) {
+		log();
+		
+		if (getPitch() > 4 || getPitch() < -4) {
 			if (obtainYaw() > 0) {
 				if (obtainYaw() < 1.5 && obtainYaw() > 0) {
 					drive.tankDrive(0.85, 0.85);
@@ -238,6 +242,29 @@ public class DriveTrain extends Subsystem {
 		} else {
 			drive.tankDrive(0.75, 0.75);
 		}
+	}
+
+	public void correctWhileDrivingWOPitch() {
+		log();
+
+		if (obtainYaw() > 0) {
+			if (obtainYaw() < 1.5 && obtainYaw() > 0) {
+				drive.tankDrive(0.85, 0.85);
+			} else if (obtainYaw() > 1.5 && obtainYaw() < 4) {
+				drive.tankDrive(-0.5, 0.5);
+			} else if (obtainYaw() > 4) {
+				drive.tankDrive(-0.6, 0.6);
+			}
+		} else if (obtainYaw() < 0) {
+			if (obtainYaw() > -1.5 && obtainYaw() < 0) {
+				drive.tankDrive(0.85, 0.85);
+			} else if (obtainYaw() < -1.5 && obtainYaw() > -4) {
+				drive.tankDrive(0.5, -0.5);
+			} else if (obtainYaw() < -4) {
+				drive.tankDrive(0.6, -0.6);
+			}
+		}
+
 	}
 
 	public void reset() {
