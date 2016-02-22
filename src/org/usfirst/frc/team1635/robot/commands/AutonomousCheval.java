@@ -19,12 +19,15 @@ public class AutonomousCheval extends CommandGroup {
 //    	addSequential(new Raise_LowerIntaker(false));//lower the intaker
 //    	addSequential(new RollIn_OutTheBall(false));// shoot out the ball
     	
-    	addSequential(new Drive_LowerCheval());
-    	addSequential(new Brake());
+    	//addSequential(new DriveTimeoutWithCorrection2(1));
     	
-    	addParallel(new Raise_LowerIntaker(true));
-    	addSequential(new DriveTimeoutWithCorrection(3));
-    	        // Add Commands here:
+    	addSequential(new Drive_LowerCheval());
+//    	addSequential(new Brake());
+//    	
+//    	addParallel(new Raise_LowerIntaker(true));
+//    	addSequential(new DriveTimeoutWithCorrection(3));
+    	        
+    	// Add Commands here:
         //addSequential(new Command1());
         //addSequential(new Command2());
         // these will run in order.

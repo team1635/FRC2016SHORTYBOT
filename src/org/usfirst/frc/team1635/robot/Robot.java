@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1635.robot.commands.Autonomous;
 import org.usfirst.frc.team1635.robot.commands.AutonomousCheval;
-import org.usfirst.frc.team1635.robot.commands.Autonomous3;
+import org.usfirst.frc.team1635.robot.commands.AutonomousBackAndForth;
 import org.usfirst.frc.team1635.robot.commands.Autonomous4;
 import org.usfirst.frc.team1635.robot.commands.DriveTimeout;
 import org.usfirst.frc.team1635.robot.subsystems.Lifter;
@@ -53,16 +53,19 @@ public class Robot extends IterativeRobot {
 		// the oi has to be initialized before doublecamera is initialized
 		oi = new OI();
 		doublecamera = new DoubleCamera();
-		// chooser = new SendableChooser();
-		// chooser.addDefault("Default Auto", new Autonomous());
-		//// chooser.addObject("My Auto", new MyAutoCommand());
-		// SmartDashboard.putData("Auto mode", chooser);
+
+		chooser = new SendableChooser();
+		chooser.addDefault("going straight", new Autonomous());
+		chooser.addObject("cheval de frise", new AutonomousCheval());
+		chooser.addObject("back and forth", new AutonomousBackAndForth());
+		SmartDashboard.putData("Auto mode", chooser);
+		
 		swich = new DigitalInput(RobotMap.kFirstSwitchPort);
 		swich2 = new DigitalInput(RobotMap.kSecondSwitchPort);
 
 		auto1 = new Autonomous();
 		autoCheval = new AutonomousCheval();
-		auto3 = new Autonomous3();
+		auto3 = new AutonomousBackAndForth();
 		auto4 = new Autonomous4();
 
 		SmartDashboard.putData("timeoutAuto", new DriveTimeout(0.75, 17));
@@ -71,18 +74,18 @@ public class Robot extends IterativeRobot {
 
 	}
 
-	public Command selectAutonomous() {
-		if (!swich.get() && !swich2.get()) {// both switches off
-			autonomousCommand = auto1;
-		} else if (swich.get() && !swich2.get()) {// switch 1 on
-			autonomousCommand = autoCheval;
-		} else if (!swich.get() && swich2.get()) {// switch 2 on
-			autonomousCommand = auto3;
-		} else if (swich.get() && swich2.get()) {// both switches on
-			autonomousCommand = auto4;
-		}
-		return autonomousCommand;
-	}
+	// public Command selectAutonomous() {
+	// if (!swich.get() && !swich2.get()) {// both switches off
+	// autonomousCommand = auto1;
+	// } else if (swich.get() && !swich2.get()) {// switch 1 on
+	// autonomousCommand = autoCheval;
+	// } else if (!swich.get() && swich2.get()) {// switch 2 on
+	// autonomousCommand = auto3;
+	// } else if (swich.get() && swich2.get()) {// both switches on
+	// autonomousCommand = auto4;
+	// }
+	// return autonomousCommand;
+	// }
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -90,6 +93,9 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
+		if (autonomousCommand != null){
+			autonomousCommand.cancel();
+	}
 
 	}
 
@@ -110,13 +116,16 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
+		autonomousCommand = (Command) chooser.getSelected();
+		autonomousCommand.start();
 
-		if (autoCheval != null)
-			autoCheval.start();
-//		if (selectAutonomous() != null)
-//			selectAutonomous().start();
+		// if (autoCheval != null)
+		// autoCheval.start();
+		// if (selectAutonomous() != null)
+		// selectAutonomous().start();
+		// if (chooser != null)
+		// chooser.start();
 	}
-	
 
 	/**
 	 * This function is called periodically during autonomous
@@ -130,8 +139,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autoCheval != null)
-			autoCheval.cancel();
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
 	}
 
 	/**

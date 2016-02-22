@@ -45,8 +45,8 @@ public class Intaker extends Subsystem {
 	}
 
 	public void log() {
-		SmartDashboard.putNumber("Pressurelevel", obtainPressureLevel());
-		SmartDashboard.putNumber("TalonSRXlastSetValue", ObtainTalonLastSetValue());
+		//SmartDashboard.putNumber("Pressurelevel", obtainPressureLevel());
+		//SmartDashboard.putNumber("TalonSRXlastSetValue", ObtainTalonLastSetValue());
 
 	}
 

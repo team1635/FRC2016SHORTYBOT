@@ -5,9 +5,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  * @author: Jing Wei Li (SKRUB_HUNTER) , Miguel Cruz (@Acelogic_ )
  */
-public class Autonomous3 extends CommandGroup {
+public class AutonomousBackAndForth extends CommandGroup {
     
-    public  Autonomous3() {
+    public  AutonomousBackAndForth() {
+    	addSequential(new DriveTimeout(0.75, 5));
+    	addSequential(new DriveTimeout(-0.75, 5));
     	        // Add Commands here:
         //addSequential(new Command1());
         //addSequential(new Command2());
