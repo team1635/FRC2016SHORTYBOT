@@ -20,6 +20,11 @@ public class RobotMap {
 	
 	//constants
     public static int kPressureLimit = 15;
+    public static double kDefenseIncline = -2.0;
+    public static double kBackupFromDefenseSpeed = 0.45;
+    public static double kBackupFromDefenseTime = 0.4;
+    public static double kChevalRaiseIntakeDelay = 0.1;
+    public static double kDriveOffCheval = 3.0;
     
     //AnalogInputs
     public static int kPressureAnalogPort = 3;//0

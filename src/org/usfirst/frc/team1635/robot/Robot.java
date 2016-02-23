@@ -9,9 +9,15 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1635.robot.commands.Autonomous;
 import org.usfirst.frc.team1635.robot.commands.AutonomousCheval;
+import org.usfirst.frc.team1635.robot.commands.AutonomousChevalBob;
+import org.usfirst.frc.team1635.robot.commands.BackupFromDefense;
+import org.usfirst.frc.team1635.robot.commands.DelayedRaiseIntake;
+import org.usfirst.frc.team1635.robot.commands.DriveStraightToDefenseIncline;
 import org.usfirst.frc.team1635.robot.commands.AutonomousBackAndForth;
 import org.usfirst.frc.team1635.robot.commands.Autonomous4;
 import org.usfirst.frc.team1635.robot.commands.DriveTimeout;
+import org.usfirst.frc.team1635.robot.commands.DriveTimeoutWithCorrection;
+import org.usfirst.frc.team1635.robot.commands.LowerIntake;
 import org.usfirst.frc.team1635.robot.subsystems.Lifter;
 import org.usfirst.frc.team1635.robot.subsystems.DoubleCamera;
 import org.usfirst.frc.team1635.robot.subsystems.DriveTrain;
@@ -58,6 +64,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("going straight", new Autonomous());
 		chooser.addObject("cheval de frise", new AutonomousCheval());
 		chooser.addObject("back and forth", new AutonomousBackAndForth());
+		chooser.addObject("cheval Bob", new AutonomousChevalBob());
 		SmartDashboard.putData("Auto mode", chooser);
 		
 		swich = new DigitalInput(RobotMap.kFirstSwitchPort);
@@ -69,6 +76,16 @@ public class Robot extends IterativeRobot {
 		auto4 = new Autonomous4();
 
 		SmartDashboard.putData("timeoutAuto", new DriveTimeout(0.75, 17));
+		SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putData(drivetrain);
+		SmartDashboard.putData(intaker);
+		
+		SmartDashboard.putData("DriveStraightToDefenseIncline",new DriveStraightToDefenseIncline());
+		SmartDashboard.putData("BackupFromDefense", new BackupFromDefense());
+		SmartDashboard.putData("LowerIntake", new LowerIntake()); 
+		SmartDashboard.putData("DriveTimeoutWithCorrection", new DriveTimeoutWithCorrection(RobotMap.kDriveOffCheval));
+		SmartDashboard.putData("DelayedRaiseIntake", new DelayedRaiseIntake(RobotMap.kChevalRaiseIntakeDelay)); 
+
 
 		// testAuto = new DriveTimeout();
 

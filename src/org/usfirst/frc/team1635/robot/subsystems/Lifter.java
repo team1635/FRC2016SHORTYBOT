@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1635.robot.subsystems;
 
 import org.usfirst.frc.team1635.robot.RobotMap;
-import org.usfirst.frc.team1635.robot.commands.CalibrateMotor;
 import org.usfirst.frc.team1635.robot.commands.ClimbWithJoystick;
 
 import edu.wpi.first.wpilibj.Joystick;

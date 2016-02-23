@@ -122,11 +122,23 @@ public class DriveTrain extends Subsystem {
 
 	}
 
+	/* Can be replaced by stop() */
 	public void stopDrive() {
 		drive.tankDrive(0, 0);
 	}
 
+	/* Bob */
+	public void stop() {
+		drive.tankDrive(0, 0);
+	}
+
+	/* Can be replaced with drive(double, double) */
 	public void driveWithParameters(double left, double right) {
+		drive.tankDrive(left, right);
+	}
+
+	/* Bob */
+	public void drive(double left, double right) {
 		drive.tankDrive(left, right);
 	}
 
@@ -220,6 +232,10 @@ public class DriveTrain extends Subsystem {
 			//Timer.delay(3);
 		}
 		//correctWhileDrivingWOPitch();
+	}
+
+	public void driveStraight() {
+	   correctWhileDrivingWOPitch();
 	}
 
 	/**
