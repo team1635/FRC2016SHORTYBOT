@@ -22,21 +22,25 @@ public class RobotMap {
     public static int kPressureLimit = 15;
     
     //Cheval Bob Auto
-    public static double kDefenseIncline = -2.0;
+    public static double kChevalDefenseIncline = -2.0; 
     public static double kBackupFromDefenseSpeed = 0.45;
     public static double kBackupFromDefenseTime = 0.4;
     public static double kChevalRaiseIntakeDelay = 0.1;
+    public static double kChevalDriveSpeed = 0.60;
     public static double kDriveOffCheval = 3.0;
     
     //Low Bar Auto
-    //public static double kLowBarUnderLowBar = 2.0;
-    public static double kLowBarTimeUnderBar = 3.0;
+    //public static double kLowBarTimeUnderBar = 1.0; too long, stops on the low bar
+    public static double kLowBarDefenseIncline = -4.0;
+    public static double kLowBarTimeUnderBar = 1.5;
+    //    public static double kLowBarTimeUnderBar = 3.0; too long, goes too far.
     public static double kLowBarFlatLow = 0.5;
     public static double kLowBarFlatHigh = 1.5;
     public static double kLowBarToTurn = 1.15;
     public static double kLowBarSpinAngle = 57.0;
     public static double kLowBarSpinSpeed = 0.65;
     public static double kLowBarToGoal = 2.0;
+    public static double kLowBarDriveSpeed = 0.80;
     
     //AnalogInputs
     public static int kPressureAnalogPort = 3;//0

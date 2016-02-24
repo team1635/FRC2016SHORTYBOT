@@ -97,14 +97,11 @@ public class Robot extends IterativeRobot {
 
   /* Testing AutonomousChevalBob */
 		SmartDashboard.putData("LowerIntake", new LowerIntake());
-		SmartDashboard.putData("DriveStraightToDefenseIncline", new DriveStraightToDefenseIncline());
-		SmartDashboard.putData("DriveUnderLowBar", new DriveStraightOffLowBar()); 
+		SmartDashboard.putData("DriveStraightToDefenseIncline", new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
+		SmartDashboard.putData("DriveStraightOffLowBar", new DriveStraightOffLowBar()); 
 		SmartDashboard.putData("DriveToTurn", new DriveTimeoutWithCorrection(RobotMap.kLowBarToTurn));
-		SmartDashboard.putData("RaiseIntake", new RaiseIntake());
 		SmartDashboard.putData("Li Turn", new RotateToSetPoint(RobotMap.kLowBarSpinAngle, true));
-		SmartDashboard.putData("Turn", new SpinToAngle(RobotMap.kLowBarSpinAngle)); 
-		SmartDashboard.putData("DriveStraightToGoal", new DriveStraightToDefenseIncline());
-		//Lower Intake
+		SmartDashboard.putData("DriveStraightToGoal", new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
 		SmartDashboard.putData("Shoot", new RollIn_OutTheBall(false)); 
 
 		// testAuto = new DriveTimeout();

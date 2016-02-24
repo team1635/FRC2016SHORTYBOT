@@ -226,20 +226,20 @@ public class DriveTrain extends Subsystem {
 		return imu.getRoll();
 	}
 
-	public void drive_65() {
+	public void drive_65(double speed) {
 		if (getPitch() < -1) {
 			drive.tankDrive(0, 0);
 			onTarget = true;
 		} else {
 			// drive.tankDrive(0.65, 0.65);
-			correctWhileDrivingWOPitch();
+			correctWhileDrivingWOPitch(speed);
 			//Timer.delay(3);
 		}
 		//correctWhileDrivingWOPitch();
 	}
 
-	public void driveStraight() {
-	   correctWhileDrivingWOPitch();
+	public void driveStraight(double spd) {
+	   correctWhileDrivingWOPitch(spd);
 	}
 
 	/**
@@ -271,12 +271,12 @@ public class DriveTrain extends Subsystem {
 		}
 	}
 
-	public void correctWhileDrivingWOPitch() {
+	public void correctWhileDrivingWOPitch(double driveSpeed) {
 		log();
 
 		if (obtainYaw() > 0) {
 			if (obtainYaw() < 1.5 && obtainYaw() > 0) {
-				drive.tankDrive(0.60, 0.60);
+				drive.tankDrive(driveSpeed, driveSpeed);
 			} else if (obtainYaw() > 1.5 && obtainYaw() < 4) {
 				drive.tankDrive(-0.35, 0.35);
 			} else if (obtainYaw() > 4) {
@@ -284,7 +284,7 @@ public class DriveTrain extends Subsystem {
 			}
 		} else if (obtainYaw() < 0) {
 			if (obtainYaw() > -1.5 && obtainYaw() < 0) {
-				drive.tankDrive(0.60, 0.60);
+				drive.tankDrive(driveSpeed, driveSpeed);
 			} else if (obtainYaw() < -1.5 && obtainYaw() > -4) {
 				drive.tankDrive(0.35, -0.35);
 			} else if (obtainYaw() < -4) {
@@ -293,28 +293,7 @@ public class DriveTrain extends Subsystem {
 		}
 
 	}
-	public void correctWhileDrivingLowBar() {
-		log();
-
-		if (obtainYaw() > 0) {
-			if (obtainYaw() < 1.5 && obtainYaw() > 0) {
-				drive.tankDrive(0.60, 0.60);
-			} else if (obtainYaw() > 1.5 && obtainYaw() < 4) {
-				drive.tankDrive(-0.35, 0.35);
-			} else if (obtainYaw() > 4) {
-				drive.tankDrive(-0.45, 0.45);
-			}
-		} else if (obtainYaw() < 0) {
-			if (obtainYaw() > -1.5 && obtainYaw() < 0) {
-				drive.tankDrive(0.60, 0.60);
-			} else if (obtainYaw() < -1.5 && obtainYaw() > -4) {
-				drive.tankDrive(0.35, -0.35);
-			} else if (obtainYaw() < -4) {
-				drive.tankDrive(0.45, -0.45);
-			}
-		}
-
-	}
+	
 
 	public void reset() {
 		imu.zeroYaw();

@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveStraightToDefenseIncline extends Command {
+	double defenseIncline;
 
-    public DriveStraightToDefenseIncline() {
+    public DriveStraightToDefenseIncline(double incline) {
+    	this.defenseIncline = incline;
     	requires(Robot.drivetrain);
     }
 
@@ -21,12 +23,12 @@ public class DriveStraightToDefenseIncline extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.driveStraight();
+    	Robot.drivetrain.driveStraight(RobotMap.kLowBarDriveSpeed);
     }
 
     // Make this return true when the robot starts climbing the defense
     protected boolean isFinished() {
-        return (Robot.drivetrain.getPitch() < RobotMap.kDefenseIncline);
+        return (Robot.drivetrain.getPitch() < defenseIncline);
     }
 
     // Called once after isFinished returns true

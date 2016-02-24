@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1635.robot.commands;
 
 import org.usfirst.frc.team1635.robot.Robot;
+import org.usfirst.frc.team1635.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -24,7 +25,7 @@ public class DriveTimeoutWithCorrection2 extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.correctWhileDrivingWOPitch();
+    	Robot.drivetrain.correctWhileDrivingWOPitch(RobotMap.kChevalDriveSpeed);
     	
     }
 

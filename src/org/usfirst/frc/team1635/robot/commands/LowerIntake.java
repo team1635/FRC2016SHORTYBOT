@@ -6,7 +6,7 @@ public class LowerIntake extends Command {
 
 	public LowerIntake() {
 		requires(Robot.intaker);
-		setTimeout(1.5); //give the pistons time to work.
+		setTimeout(0.5); //give the pistons time to work.
 	}
 
 	// Called just before this Command runs the first time

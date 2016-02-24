@@ -12,15 +12,15 @@ public class AutonomousLowBar extends CommandGroup {
     
     public  AutonomousLowBar() {
     	addSequential(new LowerIntake()); 
-    	addSequential(new DriveStraightToDefenseIncline());
+    	addSequential(new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
     	addSequential(new DriveStraightOffLowBar());
     	addSequential(new DriveTimeoutWithCorrection(RobotMap.kLowBarToTurn));
     	
     	//addSequential(new SpinToAngle(RobotMap.kLowBarSpinAngle));
 		addSequential(new RotateToSetPoint(RobotMap.kLowBarSpinAngle, true));
-		addSequential(new RaiseIntake());
-    	addSequential(new DriveStraightToDefenseIncline());
-    	addSequential(new LowerIntake());
+		//addParallel(new RaiseIntake());
+    	addSequential(new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
+    	//addSequential(new LowerIntake());
     	addSequential(new RollIn_OutTheBall(false));
     	
     }

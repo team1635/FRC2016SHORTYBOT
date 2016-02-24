@@ -21,7 +21,7 @@ public class DriveStraightOffLowBar extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.driveStraight();
+    	Robot.drivetrain.driveStraight(RobotMap.kLowBarDriveSpeed);
     }
 
     // Make this return true when the robot starts climbing the defense

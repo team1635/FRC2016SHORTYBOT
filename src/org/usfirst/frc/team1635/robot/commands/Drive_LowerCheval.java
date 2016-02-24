@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1635.robot.commands;
 
 import org.usfirst.frc.team1635.robot.Robot;
+import org.usfirst.frc.team1635.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +28,7 @@ public class Drive_LowerCheval extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.drive_65();
+    	Robot.drivetrain.drive_65(RobotMap.kChevalDriveSpeed);
     	if(Robot.drivetrain.isOnTarget()){
     		Robot.intaker.lowerIntaker();
     		Timer.delay(2.5);

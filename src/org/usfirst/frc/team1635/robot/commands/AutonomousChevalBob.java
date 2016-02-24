@@ -9,7 +9,7 @@ import org.usfirst.frc.team1635.robot.RobotMap;
 public class AutonomousChevalBob extends CommandGroup {
     
     public  AutonomousChevalBob() {
-    	addSequential(new DriveStraightToDefenseIncline());
+    	addSequential(new DriveStraightToDefenseIncline(RobotMap.kChevalDefenseIncline));
     	addSequential(new LowerIntake()); //TODO: Maybe should be done in parallel
     	addSequential(new BackupFromDefense());
     	addParallel(new DriveTimeoutWithCorrection(RobotMap.kDriveOffCheval));
