@@ -12,8 +12,8 @@ public class AutonomousChevalBob extends CommandGroup {
     	addSequential(new DriveStraightToDefenseIncline());
     	addSequential(new LowerIntake()); //TODO: Maybe should be done in parallel
     	addSequential(new BackupFromDefense());
-    	addSequential(new DriveTimeoutWithCorrection(RobotMap.kDriveOffCheval));
-    	addParallel(new DelayedRaiseIntake(RobotMap.kChevalRaiseIntakeDelay)); //TODO: I think we need to wait before this kicks off
+    	addParallel(new DriveTimeoutWithCorrection(RobotMap.kDriveOffCheval));
+    	addSequential(new DelayedRaiseIntake(RobotMap.kChevalRaiseIntakeDelay)); //TODO: I think we need to wait before this kicks off
     	        
     	// Add Commands here:
         //addSequential(new Command1());

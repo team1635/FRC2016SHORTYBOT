@@ -103,6 +103,10 @@ public class DriveTrain extends Subsystem {
 		// driveSquared( -1 * joy.getY() , -1 * joy.getRawAxis(5) * 0.9);
 		drive.tankDrive(joy.getY(), joy.getRawAxis(5));
 	}
+	
+	public void spin() {
+		drive.tankDrive(RobotMap.kLowBarSpinSpeed, RobotMap.kLowBarSpinSpeed * -1);
+	}
 
 	/*
 	 * unlimited drive for timeouts
@@ -198,19 +202,19 @@ public class DriveTrain extends Subsystem {
 	public void AngularRotation() {
 		onTarget = false;
 		if (direction) {// turn to the right
-			if (obtainYaw() < degrees + 1.5 && obtainYaw() > degrees - 1.5) {
+			if (obtainYaw() < degrees + 1.0 && obtainYaw() > degrees - 1.0) {
 				drive.tankDrive(0, 0);
 				onTarget = true;
 			} else {
-				drive.tankDrive(-0.23, 0.23);
+				drive.tankDrive(0.5, -0.5);
 			}
 		} else if (!direction) {// turn to the left
 			double inverted = -degrees;
-			if (obtainYaw() < inverted + 1.5 && obtainYaw() > inverted - 1.5) {
+			if (obtainYaw() < inverted + 1.0 && obtainYaw() > inverted - 1.0) {
 				drive.tankDrive(0, 0);
 				onTarget = true;
 			} else {
-				drive.tankDrive(0.23, -0.23);
+				drive.tankDrive(-0.5, 0.5);
 			}
 		}
 	}
@@ -268,6 +272,28 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void correctWhileDrivingWOPitch() {
+		log();
+
+		if (obtainYaw() > 0) {
+			if (obtainYaw() < 1.5 && obtainYaw() > 0) {
+				drive.tankDrive(0.60, 0.60);
+			} else if (obtainYaw() > 1.5 && obtainYaw() < 4) {
+				drive.tankDrive(-0.35, 0.35);
+			} else if (obtainYaw() > 4) {
+				drive.tankDrive(-0.45, 0.45);
+			}
+		} else if (obtainYaw() < 0) {
+			if (obtainYaw() > -1.5 && obtainYaw() < 0) {
+				drive.tankDrive(0.60, 0.60);
+			} else if (obtainYaw() < -1.5 && obtainYaw() > -4) {
+				drive.tankDrive(0.35, -0.35);
+			} else if (obtainYaw() < -4) {
+				drive.tankDrive(0.45, -0.45);
+			}
+		}
+
+	}
+	public void correctWhileDrivingLowBar() {
 		log();
 
 		if (obtainYaw() > 0) {
