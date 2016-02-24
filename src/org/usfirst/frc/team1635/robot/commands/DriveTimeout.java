@@ -11,7 +11,7 @@ public class DriveTimeout extends Command {
 	double speed,timeout;
 
     public DriveTimeout(double spd,double time) {
-    	this.speed = - spd;//motors are inverted
+    	this.speed = spd;//motors are inverted
     	requires(Robot.drivetrain);
     	setTimeout(time);
         // Use requires() here to declare subsystem dependencies
@@ -24,7 +24,7 @@ public class DriveTimeout extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.unlimitedDrive(speed, speed);
+    	Robot.drivetrain.driveWithSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

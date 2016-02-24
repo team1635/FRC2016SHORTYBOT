@@ -103,6 +103,10 @@ public class DriveTrain extends Subsystem {
 		// driveSquared( -1 * joy.getY() , -1 * joy.getRawAxis(5) * 0.9);
 		drive.tankDrive(joy.getY(), joy.getRawAxis(5));
 	}
+	public void driveWithSpeed(double velocity){
+		drive.tankDrive(velocity, velocity);
+		
+	}
 	
 	public void spin() {
 		drive.tankDrive(RobotMap.kLowBarSpinSpeed, RobotMap.kLowBarSpinSpeed * -1);

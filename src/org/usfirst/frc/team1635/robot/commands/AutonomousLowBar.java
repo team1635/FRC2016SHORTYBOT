@@ -18,9 +18,9 @@ public class AutonomousLowBar extends CommandGroup {
     	
     	//addSequential(new SpinToAngle(RobotMap.kLowBarSpinAngle));
 		addSequential(new RotateToSetPoint(RobotMap.kLowBarSpinAngle, true));
-		//addParallel(new RaiseIntake());
-    	addSequential(new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
-    	//addSequential(new LowerIntake());
+    	//addSequential(new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
+		//addSequential(new DriveTimeoutWithCorrection(1.0));
+		addSequential(new DriveTimeout(0.9, 1.5));
     	addSequential(new RollIn_OutTheBall(false));
     	
     }

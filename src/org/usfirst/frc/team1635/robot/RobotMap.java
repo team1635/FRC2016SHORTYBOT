@@ -30,17 +30,20 @@ public class RobotMap {
     public static double kDriveOffCheval = 3.0;
     
     //Low Bar Auto
-    //public static double kLowBarTimeUnderBar = 1.0; too long, stops on the low bar
+    //public static double kLowBarTimeUnderBar = 1.0; too short, stops on the low bar
     public static double kLowBarDefenseIncline = -4.0;
-    public static double kLowBarTimeUnderBar = 1.5;
-    //    public static double kLowBarTimeUnderBar = 3.0; too long, goes too far.
+    // public static double kLowBarTimeUnderBar = 1.5; //this was good for high speed
+    public static double kLowBarTimeUnderBar = 3.0; //too long for fast speed, goes too far.
+                                                    //right for low speed.
     public static double kLowBarFlatLow = 0.5;
     public static double kLowBarFlatHigh = 1.5;
-    public static double kLowBarToTurn = 1.15;
+//    public static double kLowBarToTurn = 1.15;  //This works for high speed, too short for low speed
+//    public static double kLowBarToTurn = 1.5;  //too short for low speed
+    public static double kLowBarToTurn = 1.8;//was 2.0
     public static double kLowBarSpinAngle = 57.0;
     public static double kLowBarSpinSpeed = 0.65;
     public static double kLowBarToGoal = 2.0;
-    public static double kLowBarDriveSpeed = 0.80;
+    public static double kLowBarDriveSpeed = 0.60;
     
     //AnalogInputs
     public static int kPressureAnalogPort = 3;//0
