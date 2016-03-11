@@ -2,6 +2,8 @@ package org.usfirst.frc.team1635.robot;
 
 
 import org.usfirst.frc.team1635.robot.commands.AutonomousChevalBob;
+import org.usfirst.frc.team1635.robot.commands.StopCheval;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 //import org.usfirst.frc.team1635.robot.commands.DriveWithJoystick;
@@ -47,6 +49,7 @@ public class OI {
 		
 		new JoystickButton(stick, 1).whenPressed(new AutonomousChevalBob());
 //		new JoystickButton(stick, 4).whenPressed(new Raise_LowerIntaker(false));
+		new JoystickButton(stick, 2).whenPressed(new StopCheval());//stop the cheval if needed
 		
 	}
 	

@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 	public static Lifter climber;
 	public static DoubleCamera doublecamera;
 	public static OI oi;
-	
+
 	public DigitalInput swich, swich2;
 	public JoystickButton stopButton;
 
@@ -70,16 +70,16 @@ public class Robot extends IterativeRobot {
 
 		chooser = new SendableChooser();
 		chooser.addDefault("going straight", new Autonomous());
-		//chooser.addObject("cheval de frise", new AutonomousCheval());
+		// chooser.addObject("cheval de frise", new AutonomousCheval());
 		chooser.addObject("back and forth", new AutonomousBackAndForth());
 		chooser.addObject("cheval Bob", new AutonomousChevalBob());
 		chooser.addObject("low bar", new AutonomousLowBar());
 		SmartDashboard.putData("Auto mode", chooser);
-		
+
 		swich = new DigitalInput(RobotMap.kFirstSwitchPort);
 		swich2 = new DigitalInput(RobotMap.kSecondSwitchPort);
-		
-		stopButton = new JoystickButton(Robot.oi.getJoystick(), 2);//button b
+
+		stopButton = new JoystickButton(Robot.oi.getJoystick(), 2);// button b
 
 		auto1 = new Autonomous();
 		autoCheval = new AutonomousCheval();
@@ -90,23 +90,29 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(intaker);
-		
-  /* Testing AutonomousChevalBob
-		SmartDashboard.putData("DriveStraightToDefenseIncline",new DriveStraightToDefenseIncline());
-		SmartDashboard.putData("BackupFromDefense", new BackupFromDefense());
-		SmartDashboard.putData("LowerIntake", new LowerIntake()); 
-		SmartDashboard.putData("DriveTimeoutWithCorrection", new DriveTimeoutWithCorrection(RobotMap.kDriveOffCheval));
-		SmartDashboard.putData("DelayedRaiseIntake", new DelayedRaiseIntake(RobotMap.kChevalRaiseIntakeDelay)); 
-  */
 
-  /* Testing AutonomousChevalBob */
+		/*
+		 * Testing AutonomousChevalBob
+		 * SmartDashboard.putData("DriveStraightToDefenseIncline",new
+		 * DriveStraightToDefenseIncline());
+		 * SmartDashboard.putData("BackupFromDefense", new BackupFromDefense());
+		 * SmartDashboard.putData("LowerIntake", new LowerIntake());
+		 * SmartDashboard.putData("DriveTimeoutWithCorrection", new
+		 * DriveTimeoutWithCorrection(RobotMap.kDriveOffCheval));
+		 * SmartDashboard.putData("DelayedRaiseIntake", new
+		 * DelayedRaiseIntake(RobotMap.kChevalRaiseIntakeDelay));
+		 */
+
+		/* Testing AutonomousChevalBob */
 		SmartDashboard.putData("LowerIntake", new LowerIntake());
-		SmartDashboard.putData("DriveStraightToDefenseIncline", new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
-		SmartDashboard.putData("DriveStraightOffLowBar", new DriveStraightOffLowBar()); 
+		SmartDashboard.putData("DriveStraightToDefenseIncline",
+				new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
+		SmartDashboard.putData("DriveStraightOffLowBar", new DriveStraightOffLowBar());
 		SmartDashboard.putData("DriveToTurn", new DriveTimeoutWithCorrection(RobotMap.kLowBarToTurn));
 		SmartDashboard.putData("Li Turn", new RotateToSetPoint(RobotMap.kLowBarSpinAngle, true));
-		SmartDashboard.putData("DriveStraightToGoal", new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
-		SmartDashboard.putData("Shoot", new RollIn_OutTheBall(false)); 
+		SmartDashboard.putData("DriveStraightToGoal",
+				new DriveStraightToDefenseIncline(RobotMap.kLowBarDefenseIncline));
+		SmartDashboard.putData("Shoot", new RollIn_OutTheBall(false));
 
 		// testAuto = new DriveTimeout();
 
@@ -131,9 +137,9 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
-		if (autonomousCommand != null){
+		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
-	}
+		}
 
 	}
 
@@ -170,12 +176,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
-		if(stopButton.get()){
-			if (autonomousCommand != null)
-				autonomousCommand.cancel();			
-		}
-		
+
+		// if(stopButton.get()){
+		// if (autonomousCommand != null)
+		// autonomousCommand.cancel();
+		// }
+
 	}
 
 	public void teleopInit() {
@@ -193,6 +199,12 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		log();
+
+//		if (stopButton.get()) {
+//			Scheduler.getInstance().disable();
+//
+//		}
+
 	}
 
 	/**
