@@ -23,7 +23,7 @@ public class RobotMap {
     
     //Cheval Bob Auto
     public static double kChevalDefenseIncline = -2.0; 
-    public static double kBackupFromDefenseSpeed = 0.45;
+    public static double kBackupFromDefenseSpeed = 0.65;
     public static double kBackupFromDefenseTime = 0.4;
     public static double kChevalRaiseIntakeDelay = 0.1;
     public static double kChevalDriveSpeed = 0.60;
