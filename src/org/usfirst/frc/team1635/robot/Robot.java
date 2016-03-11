@@ -3,6 +3,7 @@ package org.usfirst.frc.team1635.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -48,8 +49,9 @@ public class Robot extends IterativeRobot {
 	public static Lifter climber;
 	public static DoubleCamera doublecamera;
 	public static OI oi;
-
+	
 	public DigitalInput swich, swich2;
+	public JoystickButton stopButton;
 
 	Command autonomousCommand, auto1, autoCheval, auto3, auto4, testAuto;
 	SendableChooser chooser;
@@ -68,7 +70,7 @@ public class Robot extends IterativeRobot {
 
 		chooser = new SendableChooser();
 		chooser.addDefault("going straight", new Autonomous());
-		chooser.addObject("cheval de frise", new AutonomousCheval());
+		//chooser.addObject("cheval de frise", new AutonomousCheval());
 		chooser.addObject("back and forth", new AutonomousBackAndForth());
 		chooser.addObject("cheval Bob", new AutonomousChevalBob());
 		chooser.addObject("low bar", new AutonomousLowBar());
@@ -76,6 +78,8 @@ public class Robot extends IterativeRobot {
 		
 		swich = new DigitalInput(RobotMap.kFirstSwitchPort);
 		swich2 = new DigitalInput(RobotMap.kSecondSwitchPort);
+		
+		stopButton = new JoystickButton(Robot.oi.getJoystick(), 2);//button b
 
 		auto1 = new Autonomous();
 		autoCheval = new AutonomousCheval();
@@ -166,6 +170,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		if(stopButton.get()){
+			if (autonomousCommand != null)
+				autonomousCommand.cancel();			
+		}
+		
 	}
 
 	public void teleopInit() {
