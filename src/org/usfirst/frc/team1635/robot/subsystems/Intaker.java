@@ -87,7 +87,7 @@ public class Intaker extends Subsystem {
 		double outputspd = 0.0;
 		// the following method sets the current pressure level currentpl
 		double lastPressure = obtainPressureLevel();
-		System.out.println(" pressure" + lastPressure);
+		//System.out.println(" pressure" + lastPressure);
 
 		if (checkPressureHistory() && joy_x.getRawButton(5)) {
 			// Timer.delay(0.05);// delay the locking mechanism to allow more

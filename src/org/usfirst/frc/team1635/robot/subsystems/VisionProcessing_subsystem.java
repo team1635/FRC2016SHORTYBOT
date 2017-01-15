@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class VisionProcessing extends Subsystem {
+public class VisionProcessing_subsystem extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	public VisionProcessing(){
+	public VisionProcessing_subsystem(){
 		
 		
 		

@@ -5,6 +5,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team1635.robot.commands.VisionProcessing;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -30,6 +31,10 @@ public class DoubleCamera extends Subsystem {
 	private Joystick stick;
 	boolean cameraStatus;
 	Thread visionThread;
+	public Mat mat;
+	public GripPipeline grip;
+	
+	
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -43,8 +48,10 @@ public class DoubleCamera extends Subsystem {
 		visionThread = new Thread(() -> {
 			// Get the UsbCamera from CameraServer
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+			//GripPipeline.process(mat);
 			// Set the resolution
 			camera.setResolution(480, 320);
+			camera.setFPS(24);
 
 			// Get a CvSink. This will capture Mats from the camera
 			CvSink cvSink = CameraServer.getInstance().getVideo();
@@ -52,31 +59,53 @@ public class DoubleCamera extends Subsystem {
 			CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", 480, 320);
 
 			// Mats are very memory expensive. Lets reuse this Mat.
-			Mat mat = new Mat();
+			
+			mat = new Mat();
 
-			// This cannot be 'true'. The program will never exit if it is. This
+		// This cannot be 'true'. The program will never exit if it is. This
 			// lets the robot stop this thread when restarting robot code or
 			// deploying.
+			grip = new GripPipeline(mat);
+			
 			while (!Thread.interrupted()) {
 				// Tell the CvSink to grab a frame from the camera and put it
 				// in the source mat.  If there is an error notify the output.
 				if (cvSink.grabFrame(mat) == 0) {
+					
 					// Send the output the error.
 					outputStream.notifyError(cvSink.getError());
 					// skip the rest of the current iteration
 					continue;
 				}
+				
+				grip.process();	
+				System.out.println("Mat generated while loop");
 				// Put a rectangle on the image
 				Imgproc.rectangle(mat, new Point(100, 100), new Point(400, 400),
 						new Scalar(255, 255, 255), 5);
 				// Give the output stream a new image to display
-				outputStream.putFrame(mat);
+				
+				//outputStream.putFrame(mat);
+				outputStream.putFrame(grip.cvErodeOutput());
 			}
+			
+			boolean runningMat = true;
+			int count = 0;
+			while (runningMat){
+				System.out.println("Mat generated runningMat" + count);
+				grip.process();	
+				outputStream.putFrame(grip.cvErodeOutput());
+				count += 1;
+				//outputStream.
+			}
+			
+					
 		});
 		visionThread.setDaemon(true);
 		visionThread.start();
 		
-		
+//		GripPipeline grip = new GripPipeline(mat_);
+			
 //		stick = Robot.oi.getJoystick();
 //		// Get camera ids by supplying camera name ex 'cam0', found on roborio web interface
 //        camCenter = NIVision.IMAQdxOpenCamera(RobotMap.camNameCenter, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
@@ -90,6 +119,15 @@ public class DoubleCamera extends Subsystem {
 //        server.setSize(0);// limit the resolution to 160*120
 //        
         
+	}
+	
+//	public void runGrip(Mat input){
+//		
+//		
+//	}
+	
+	public void loopGrip(){
+		grip.process();	
 	}
 	
 	public void StartCam0(){
@@ -107,6 +145,7 @@ public class DoubleCamera extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new DualCameras());
+    	//setDefaultCommand(new VisionProcessing());
     }
     public void init()
 	{
