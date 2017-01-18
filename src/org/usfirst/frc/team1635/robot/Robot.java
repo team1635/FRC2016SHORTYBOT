@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team1635.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -33,6 +35,7 @@ import org.usfirst.frc.team1635.robot.subsystems.Intaker;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * @author : Jing Wei Li (SKRUB_HUNTER) , Miguel Cruz (@Acelogic_ )
@@ -94,7 +97,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(intaker);
-
+		
 		/*
 		 * Testing AutonomousChevalBob
 		 * SmartDashboard.putData("DriveStraightToDefenseIncline",new

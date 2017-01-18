@@ -7,12 +7,15 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import com.sun.javafx.collections.NonIterableChange.GenericAddRemoveChange;
+
 import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.vision.VisionRunner;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,10 +23,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class DoubleCamera extends Subsystem {
+public class DoubleCamera extends Subsystem implements VisionRunner.Listener<GripPipeline> {
 	boolean cameraStatus;
-	Thread visionThread;
-	public GripPipeline grip;
+	public Thread cameraThread;
+	public VisionThread processingThread;
+	public GripPipeline gripPipeline;
+	public boolean pipelineRan = false;
+	public final Object visionLock = new Object();
+
+	Mat vidSource = new Mat();
+	Mat output = new Mat();
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -36,37 +45,26 @@ public class DoubleCamera extends Subsystem {
 			CvSink cvSink = CameraServer.getInstance().getVideo();
 			CvSource outputStream = CameraServer.getInstance().putVideo("CameraSource", 320, 240);
 
-			Mat source = new Mat();
-			Mat output = new Mat();
-			
-			boolean visionSwitcher = true; // TRUE For Regular Cam / FALSE For CV Filters 
-			
-			while (visionSwitcher == true) {
-				cvSink.grabFrame(source);
-				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+			while (true) {
+				cvSink.grabFrame(vidSource);
+				Imgproc.cvtColor(vidSource, output, Imgproc.COLOR_BGR2GRAY);
 				outputStream.putFrame(output);
 			}
-			
-			while (visionSwitcher == false){ 
-				grip.process(source);
-			    // TODO: Add Vision runner.listener interface within code
-				// TODO: Use VisionRunner Class
-				cvSink.grabFrame(source); 
-				outputStream.putFrame(output);
-				
-				
-			}
-			
-			
+
 		}).start();
 	}
 
-	//
+	@Override
+	public void copyPipelineOutputs(GripPipeline pipeline) {
+		synchronized (visionLock) {
+			this.pipelineRan = true;
+		}
+
+	}
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new DualCameras());
 		// setDefaultCommand(new VisionProcessing());
 	}
-
 }
