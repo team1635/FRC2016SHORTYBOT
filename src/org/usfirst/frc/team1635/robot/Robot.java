@@ -28,6 +28,7 @@ import org.usfirst.frc.team1635.robot.commands.SpinToAngle;
 import org.usfirst.frc.team1635.robot.subsystems.Lifter;
 import org.usfirst.frc.team1635.robot.subsystems.DoubleCamera;
 import org.usfirst.frc.team1635.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1635.robot.subsystems.GripPipeline;
 import org.usfirst.frc.team1635.robot.subsystems.Intaker;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 	public static Intaker intaker;
 	public static Lifter climber;
 	public static DoubleCamera doublecamera;
+	public static GripPipeline gripsubsystem;
 	public static OI oi;
 
 	public DigitalInput swich, swich2;
@@ -65,6 +67,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new DriveTrain();
 		intaker = new Intaker();
 		climber = new Lifter();
+		gripsubsystem = new GripPipeline();
 		// the oi has to be initialized before doublecamera is initialized
 		oi = new OI();
 		doublecamera = new DoubleCamera();

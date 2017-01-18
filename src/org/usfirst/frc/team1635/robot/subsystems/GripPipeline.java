@@ -1,5 +1,4 @@
 package org.usfirst.frc.team1635.robot.subsystems;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,10 +14,6 @@ import org.opencv.features2d.FeatureDetector;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
-import org.usfirst.frc.team1635.robot.commands.IntakeWithJoystick;
-import org.usfirst.frc.team1635.robot.commands.VisionProcessing;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
 * GripPipeline class.
@@ -35,25 +30,17 @@ public class GripPipeline {
 	private Mat cvErodeOutput = new Mat();
 	private Mat maskOutput = new Mat();
 	private MatOfKeyPoint findBlobsOutput = new MatOfKeyPoint();
-	public Mat grip;
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
-	
-	public GripPipeline(Mat grip){
-		this.grip = grip;
-		System.out.println("This is Grip");
-	}
-	
-
 
 	/**
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
-	public void process() {
+	public void process(Mat source0) {
 		// Step CV_resize0:
-		Mat cvResizeSrc = grip;
+		Mat cvResizeSrc = source0;
 		Size cvResizeDsize = new Size(0, 0);
 		double cvResizeFx = 2.25;
 		double cvResizeFy = 2.25;
