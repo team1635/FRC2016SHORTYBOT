@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1635.robot.subsystems;
 
+import javax.swing.text.DefaultEditorKit.CopyAction;
+
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -9,7 +11,8 @@ import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
-
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
+import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,7 +23,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DoubleCamera extends Subsystem {
 	boolean cameraStatus;
 	Thread visionThread;
-	public Mat mat;
 	public GripPipeline grip;
 
 	// Put methods for controlling this subsystem
@@ -46,6 +48,11 @@ public class DoubleCamera extends Subsystem {
 			}
 			
 			while (visionSwitcher == false){ 
+				grip.process(source);
+			    // TODO: Add Vision runner.listener interface within code
+				// TODO: Use VisionRunner Class
+				cvSink.grabFrame(source); 
+				outputStream.putFrame(output);
 				
 				
 			}
