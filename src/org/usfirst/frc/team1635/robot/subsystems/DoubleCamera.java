@@ -27,7 +27,7 @@ public class DoubleCamera extends Subsystem implements VisionRunner.Listener<Gri
 	boolean cameraStatus;
 	public Thread cameraThread;
 	public VisionThread processingThread;
-	public GripPipeline gripPipeline;
+	public GripPipeline firstVisionPipeline;
 	public boolean pipelineRan = false;
 	public final Object visionLock = new Object();
 
@@ -44,7 +44,13 @@ public class DoubleCamera extends Subsystem implements VisionRunner.Listener<Gri
 
 			CvSink cvSink = CameraServer.getInstance().getVideo();
 			CvSource outputStream = CameraServer.getInstance().putVideo("CameraSource", 320, 240);
-
+			// Vision Code --------------------------------------------------------
+			 firstVisionPipeline = new GripPipeline(); // PIPELINE 1 
+			processingThread = new VisionThread(camera, firstVisionPipeline, this); // To change vision pipelines change middle 
+			                           												//params to constructor var name TODO:Turn this to a command. 
+			processingThread.start();
+			//---------------------------------------------------------------------
+			
 			while (true) {
 				cvSink.grabFrame(vidSource);
 				Imgproc.cvtColor(vidSource, output, Imgproc.COLOR_BGR2GRAY);
@@ -54,14 +60,17 @@ public class DoubleCamera extends Subsystem implements VisionRunner.Listener<Gri
 		}).start();
 	}
 
+	
+	// Vision Code ----------------------------------------------------------------
 	@Override
 	public void copyPipelineOutputs(GripPipeline pipeline) {
 		synchronized (visionLock) {
-			this.pipelineRan = true;
+			this.pipelineRan = true; 
+			
 		}
 
 	}
-
+   //-------------------------------------------------------------------------------
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new DualCameras());
